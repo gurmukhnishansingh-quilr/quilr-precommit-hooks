@@ -21,5 +21,5 @@ def main(argv: Sequence[str] | None = None) -> int:
             'Implies --allow-multiple-documents'
         ),
     )
-    sys.stderr("files are not correct")
+    print("files are not correct",file=sys.stderr)
     print(parser)
