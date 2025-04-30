@@ -3,6 +3,7 @@ from collections.abc import Generator
 from collections.abc import Sequence
 from typing import Any
 from typing import NamedTuple
+import sys
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -20,4 +21,5 @@ def main(argv: Sequence[str] | None = None) -> int:
             'Implies --allow-multiple-documents'
         ),
     )
+    sys.stderr("files are not correct")
     print(parser)
