@@ -3,7 +3,19 @@ from collections.abc import Generator
 from collections.abc import Sequence
 from typing import Any
 from typing import NamedTuple
-import sys
+import sys, os
+import yaml
+from pathlib import Path
+
+def getallattribute(location: str):
+    attributes = []
+    for yaml_file in Path(location).rglob("*.yaml"):
+        with open(yaml_file, 'r') as file:
+            data = yaml.safe_load(file)
+        for attribute in data['attributes']:
+            attributes.append(attribute.get('id'))
+    return attributes
+        
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -23,14 +35,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument('filenames', nargs='*', help='Filenames to check.')
     args = parser.parse_args(argv)
-    retval = 1
+    retval = 0
     for filename in args.filenames:
-        try:
-            with open(filename, encoding='UTF-8') as f:
-                load_fn(f)
-        except ruamel.yaml.YAMLError as exc:
-            print(exc)
-            retval = 1
+        with open(filename, mode='r') as f:
+            file = yaml.safe_load(f)
+        if file['type'] == 'use-case':
+            for attribute in file['condition']:
+                if attribute['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
+                    return 1
     return retval
 
 
