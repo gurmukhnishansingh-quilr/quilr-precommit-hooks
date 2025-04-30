@@ -21,5 +21,18 @@ def main(argv: Sequence[str] | None = None) -> int:
             'Implies --allow-multiple-documents'
         ),
     )
-    print("files are not correct",file=sys.stderr)
-    print(parser)
+    parser.add_argument('filenames', nargs='*', help='Filenames to check.')
+    args = parser.parse_args(argv)
+    retval = 1
+    for filename in args.filenames:
+        try:
+            with open(filename, encoding='UTF-8') as f:
+                load_fn(f)
+        except ruamel.yaml.YAMLError as exc:
+            print(exc)
+            retval = 1
+    return retval
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())
