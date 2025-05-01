@@ -12,6 +12,6 @@
     types: [yaml]
 -   id: check-version
     name: Check YAML Version
-    entry: check_version
+    entry: check-version
     language: python
     types: [yaml]
