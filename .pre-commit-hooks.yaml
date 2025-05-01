@@ -10,3 +10,8 @@
     entry: attribute-missing
     language: python
     types: [yaml]
+-   id: check-version
+    name: Check YAML Version
+    entry: check_version.py
+    language: python
+    types: [yaml]
