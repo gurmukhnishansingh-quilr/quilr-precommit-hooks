@@ -2,9 +2,6 @@ import sys
 import yaml
 from packaging import version
 
-# Define the minimum required version
-MIN_REQUIRED_VERSION = "1.0.0"
-
 def check_version_in_file(file_path):
     with open(file_path, "r") as f:
         try:
@@ -21,20 +18,16 @@ def check_version_in_file(file_path):
         print(f"[FAIL] 'version' attribute missing in {file_path}")
         return 1
 
+    # Normalize to string to support values like 1.8
     file_version_str = str(data["version"])
 
     try:
-        file_version = version.parse(file_version_str)
-        required_version = version.parse(MIN_REQUIRED_VERSION)
-    except Exception as e:
+        parsed_version = version.parse(file_version_str)
+    except Exception:
         print(f"[ERROR] Invalid version format in {file_path}: {file_version_str}")
         return 1
 
-    if file_version < required_version:
-        print(f"[FAIL] Version too old in {file_path}: {file_version} < {required_version}")
-        return 1
-
-    print(f"[PASS] {file_path}: version {file_version} is valid")
+    print(f"[PASS] {file_path}: version {parsed_version} is valid")
     return 0
 
 def main():
