@@ -15,3 +15,5 @@
     entry: check-version
     language: python
     types: [yaml]
+    additional_dependencies:
+        - packaging
