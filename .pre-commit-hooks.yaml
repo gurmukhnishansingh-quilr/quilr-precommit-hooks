@@ -4,10 +4,10 @@
     entry: check-yaml
     language: python
     types: [yaml]
--   id: attribute-missing
+-   id: check-attribute
     name: Check attribtue missing
     description: checks if attribute is available
-    entry: attribute-missing
+    entry: cheeck-attribute
     language: python
     types: [yaml]
 -   id: check-version
