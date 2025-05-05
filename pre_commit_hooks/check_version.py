@@ -43,7 +43,7 @@ def main():
         return
 
     # Compare versions using packaging.version
-    if version.parse(new_ver) <= version.parse(old_ver):
+    if version.parse(str(new_ver)) <= version.parse(str(old_ver)):
         print(f"❌ Version check failed: {new_ver} is not greater than {old_ver}")
         sys.exit(1)
 
