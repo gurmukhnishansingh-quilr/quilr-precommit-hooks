@@ -41,7 +41,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             file = yaml.safe_load(f)
         if file['type'] == 'use-case':
             for attribute in file['condition']:
-                if attribute['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
+                if attribute['filter_condition']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
                     return 1
     return retval
 
