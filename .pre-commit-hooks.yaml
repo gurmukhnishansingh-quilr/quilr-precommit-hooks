@@ -17,3 +17,9 @@
     types: [yaml]
     additional_dependencies:
         - packaging
+-   id: validate-schema
+    name: validate schema
+    description: validates yaml files against a schema
+    entry: validate-schema
+    language: python
+    types: [yaml]
