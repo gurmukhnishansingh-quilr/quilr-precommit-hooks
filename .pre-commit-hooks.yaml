@@ -23,3 +23,6 @@
     entry: validate-schema
     language: python
     types: [yaml]
+    additional_dependencies:
+        - jsonschema
+        - PyYAML
