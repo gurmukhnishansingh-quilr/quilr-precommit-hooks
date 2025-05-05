@@ -1,6 +1,6 @@
 repos:
 -   repo: https://github.com/gurmukhnishansingh-quilr/quilr-precommit-hooks
-    rev: v5.0.0
+    rev: main
     hooks:
     -   id: check-yaml
     -   id: check-attribute
