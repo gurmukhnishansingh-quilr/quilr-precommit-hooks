@@ -5,7 +5,7 @@ from jsonschema import validate
 
 # Define JSON Schema 
 base_action_schema = {
-    "type": "object",
+  "type": "object",
   "properties": {
     "id": { "type": "string", "format": "uuid" },
     "version": { "type": "string" },
@@ -16,8 +16,28 @@ base_action_schema = {
     "actiontype": { "type": "string" },
     "config": {
       "type": "object",
-    }
-  }
+    },"tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "behavior": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "createdon": { "type": "integer" },
+    "updatedon": { "type": "integer" }
+  },"required": [
+    "id",
+    "version",
+    "code",
+    "name",
+    "type",
+    "actiontype",
+    "config",
+    "tags",
+    "behavior",
+    "createdon",
+    "updatedon"]
 }
 use_case_schema = {
     "type": "object",
