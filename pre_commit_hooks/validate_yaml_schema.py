@@ -43,9 +43,7 @@ use_case_schema = {
     },
     "required": ["id", "version", "code", "name", "type", "description", "posture", "behavior", "condition", "disabled", "createdon", "updatedon"]
 }
-activate_agent_schema = {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "AccountDeletionAgentSchema",
+deploy_agent_schema = {
   "type": "object",
   "properties": {
     "id": { "type": "string", "format": "uuid" },
@@ -173,7 +171,163 @@ activate_agent_schema = {
     "config"
   ]
 }
+engage_agent_schema = {
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "version": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "type": { "type": "string" },
+    "actiontype": { "type": "string" },
+    "config": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "channel": { "type": ["string", "null"] },
+            "engagement_type": { "type": "string" },
+            "message_template": { "type": "string" }
+          },
+          "required": ["engagement_type", "message_template"]
+        },
+        "execution_type": { "type": "string" },
+        "execution_module": { "type": "string" }
+      },
+      "required": ["meta", "execution_type", "execution_module"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "behavior": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" }
+        },
+        "required": ["name", "description"]
+      }
+    },
+    "createdon": { "type": "integer" },
+    "updatedon": { "type": "integer" }
+  },
+  "required": [
+    "id",
+    "version",
+    "code",
+    "name",
+    "type",
+    "actiontype",
+    "config",
+    "tags",
+    "behavior",
+    "outcomes",
+    "createdon",
+    "updatedon"
+  ]
+}
+jit_schema = {
+  "type": "object",
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "version": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "type": { "type": "string", "enum": ["action"] },
+    "actiontype": { "type": "string", "enum": ["ACTP_02"] },
+    "config": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "channel": { "type": ["string", "null"] },
+            "engagement_type": { "type": "string", "enum": ["templatized"] },
+            "message_template": { "type": "string" },
+            "execution_type": { "type": "string", "enum": ["tool"] },
+            "execution_module": { "type": "string", "enum": ["send_templated_user_message"] },
+            "browser_action": { "type": "string" }
+          },
+          "required": [
+            "engagement_type",
+            "message_template",
+            "execution_type",
+            "execution_module",
+            "browser_action"
+          ]
+        }
+      },
+      "required": ["meta"]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "behavior": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "createdon": { "type": "integer" },
+    "updatedon": { "type": "integer" }
+  },
+  "required": [
+    "id",
+    "version",
+    "code",
+    "name",
+    "type",
+    "actiontype",
+    "config",
+    "tags",
+    "behavior",
+    "createdon",
+    "updatedon"
+  ]
+}
 def main():
+    for filename in sys.argv[1:]:
+        with open(filename, 'r') as f:
+            try:
+                data = yaml.safe_load(f)
+            except Exception as e:
+                print(f"❌ Failed to parse {filename}: {e}")
+                continue
+
+            if not isinstance(data, dict):
+                print(f"❌ {filename} is not a valid YAML object.")
+                continue
+
+            try:
+                if data.get("type") == "use-case":
+                    validate(instance=data, schema=use_case_schema)
+                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
+                    validate(instance=data, schema=deploy_agent_schema)
+                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_01":
+                    validate(instance=data, schema=engage_agent_schema)
+                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_02":
+                    validate(instance=data, schema=jit_schema)
+                else:
+                    print(f"⚠️  {filename} has unsupported type/actiontype combination.")
+                    continue
+
+                print(f"✅ {filename} is valid")
+
+            except jsonschema.exceptions.ValidationError as e:
+                print(f"❌ {filename} failed validation:\n{e.message}\nAt path: {list(e.path)}")
+                continue
+
+if __name__ == "__main__":
+    main()
+    
+#def main():
     for filename in sys.argv[1:]:
         with open(filename, 'r') as f:
             try:
@@ -190,11 +344,18 @@ def main():
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
                 elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
-                    validate(instance=data, schema=activate_agent_schema)
+                    validate(instance=data, schema=deploy_agent_schema)
                     print(f"✅ {filename} is valid")
+                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_01":
+                    validate(instance=data, schema=engage_agent_schema)
+                    print(f"✅ {filename} is valid")
+                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_02":
+                    validate(instance=data, schema=jit_schema)
+                    print(f"✅ {filename} is valid")    
+                    
             except jsonschema.exceptions.ValidationError as e:
                 print(f"❌ {filename} failed validation:\n{e.message}")
                 sys.exit(1)
 
-if __name__ == "__main__":
-    main()
+#if __name__ == "__main__":
+    #main()
