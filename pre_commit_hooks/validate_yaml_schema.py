@@ -4,6 +4,21 @@ import jsonschema
 from jsonschema import validate
 
 # Define JSON Schema 
+base_action_schema = {
+    "type": "object",
+  "properties": {
+    "id": { "type": "string", "format": "uuid" },
+    "version": { "type": "string" },
+    "code": { "type": "string" },
+    "name": { "type": "string" },
+    "description": { "type": "string" },
+    "type": { "type": "string" },
+    "actiontype": { "type": "string" },
+    "config": {
+      "type": "object",
+    }
+  }
+}
 use_case_schema = {
     "type": "object",
     "properties": {
@@ -306,18 +321,26 @@ def main():
                 print(f"❌ {filename} is not a valid YAML object.")
                 sys.exit(1)
             try:
-                if data.get("type") == "use-case":
+                if data.get("type") == "action": 
+                    validate(instance=data, schema=base_action_schema)
+                    print(f"✅ {filename} is valid")
+                    if data.get("type") == "action" and data.get("actiontype") == "ACTP_01":
+                        validate(instance=data, schema=engage_agent_schema)
+                        print(f"✅ {filename} is valid")
+                    elif data.get("type") == "action" and data.get("actiontype") == "ACTP_02":
+                        validate(instance=data, schema=jit_schema)
+                        print(f"✅ {filename} is valid")
+                    elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
+                        validate(instance=data, schema=deploy_agent_schema)
+                        print(f"✅ {filename} is valid")           
+                
+                elif data.get("type") == "use-case":
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
-                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
-                    validate(instance=data, schema=deploy_agent_schema)
-                    print(f"✅ {filename} is valid")
-                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_01":
-                    validate(instance=data, schema=engage_agent_schema)
-                    print(f"✅ {filename} is valid")
-                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_02":
-                    validate(instance=data, schema=jit_schema)
-                    print(f"✅ {filename} is valid")    
+                    
+                else:
+                    print(f"❌ {filename} has an unknown type: {data.get('type')}")
+                    sys.exit(1)                   
                     
             except jsonschema.exceptions.ValidationError as e:
                 print(f"❌ {filename} failed validation:\n{e.message}")
