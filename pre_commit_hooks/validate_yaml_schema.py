@@ -292,42 +292,8 @@ jit_schema = {
     "updatedon"
   ]
 }
-def main():
-    for filename in sys.argv[1:]:
-        with open(filename, 'r') as f:
-            try:
-                data = yaml.safe_load(f)
-            except Exception as e:
-                print(f"❌ Failed to parse {filename}: {e}")
-                continue
-
-            if not isinstance(data, dict):
-                print(f"❌ {filename} is not a valid YAML object.")
-                continue
-
-            try:
-                if data.get("type") == "use-case":
-                    validate(instance=data, schema=use_case_schema)
-                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
-                    validate(instance=data, schema=deploy_agent_schema)
-                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_01":
-                    validate(instance=data, schema=engage_agent_schema)
-                elif data.get("type") == "action" and data.get("actiontype") == "ACTP_02":
-                    validate(instance=data, schema=jit_schema)
-                else:
-                    print(f"⚠️  {filename} has unsupported type/actiontype combination.")
-                    continue
-
-                print(f"✅ {filename} is valid")
-
-            except jsonschema.exceptions.ValidationError as e:
-                print(f"❌ {filename} failed validation:\n{e.message}\nAt path: {list(e.path)}")
-                continue
-
-if __name__ == "__main__":
-    main()
     
-#def main():
+def main():
     for filename in sys.argv[1:]:
         with open(filename, 'r') as f:
             try:
@@ -357,5 +323,5 @@ if __name__ == "__main__":
                 print(f"❌ {filename} failed validation:\n{e.message}")
                 sys.exit(1)
 
-#if __name__ == "__main__":
-    #main()
+if __name__ == "__main__":
+    main()
