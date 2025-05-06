@@ -44,7 +44,6 @@ use_case_schema = {
     "required": ["id", "version", "code", "name", "type", "description", "posture", "behavior", "condition", "disabled", "createdon", "updatedon"]
 }
 activate_agent_schema = {
-    {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "AccountDeletionAgentSchema",
   "type": "object",
@@ -173,8 +172,6 @@ activate_agent_schema = {
     "actiontype",
     "config"
   ]
-}
-
 }
 def main():
     for filename in sys.argv[1:]:
