@@ -8,7 +8,7 @@ use_case_schema = {
     "type": "object",
     "properties": {
         "id": {"type": "string"},
-        "version": {"type": "float"},
+        "version": {"type": "number"},
         "code": {"type": "string"},
         "name": {"type": "string"},
         "type": {"type": "string", "enum": ["use-case"]},
