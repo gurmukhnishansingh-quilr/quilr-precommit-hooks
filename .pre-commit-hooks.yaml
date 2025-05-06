@@ -26,8 +26,3 @@
     additional_dependencies:
         - jsonschema
         - PyYAML
--   id: fix_yaml_fields
-    name: Fix YAML Fields
-    description: Auto-fix version, UUID, and booleans in YAML files
-    entry: fix_yaml_fields
-    language: python
