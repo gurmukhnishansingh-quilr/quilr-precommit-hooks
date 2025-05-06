@@ -21,6 +21,8 @@ use_case_schema = {
                 "type": "object",
                 "properties": {
                     "operator": {"type": ["string", "null"]},
+                    "editable": {"type": "boolean"},
+                    "filter_group": {"type": ["array", "null"], "items": {"type": "object"}},
                     "filter_condition": {
                         "type": "object",
                         "properties": {
@@ -28,13 +30,11 @@ use_case_schema = {
                             "attribute_id": {"type": "string"},
                             "condition": {"type": "string"},
                             "value": {"type": "string"},
-                            "filter_group": {"type": ["string", "null"]},
-                            "editable": {"type": "boolean"}
                         },
-                        "required": ["attribute_type", "attribute_id", "condition", "value", "editable"]
+                        "required": ["attribute_type", "attribute_id", "condition", "value"]
                     }
                 },
-                "required": ["filter_condition"]
+                "required": ["filter_condition", "operator", "editable", "filter_group"]
             }
         },
         "disabled": {"type": "boolean"},
