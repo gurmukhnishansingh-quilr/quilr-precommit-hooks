@@ -364,7 +364,7 @@ Attributes_Schema ={
           "description": { "type": "string" },
           "duplicate_allowed": { "type": "boolean" },
           "tags": {
-            "type": "array",
+            "type": ["array", "null"],
             "items": { "type": "string" }
           },
           "graph_property": {
