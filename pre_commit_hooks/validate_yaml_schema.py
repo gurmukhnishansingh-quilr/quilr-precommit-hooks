@@ -554,6 +554,7 @@ Behavior_Finding_Schema = {
         "template",
         "artifacts",
         "properties"
+        "posture"
       ]
     },
     "lambda": {
