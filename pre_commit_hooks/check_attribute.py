@@ -44,8 +44,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                 if attribute['filter_condition']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
                     return 1
         elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
-            for attribute in file['condition']:
-                if attribute['trigger_conditions']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
+            for attribute in file['trigger_conditions']:
+                if attribute['filter_condition']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
                     return 1        
     return retval
 
