@@ -419,7 +419,7 @@ Behavior_Finding_Schema = {
       "description": "Unique identifier for the behavior"
     },
     "version": {
-      "type": "string",
+      "type": ["string", "number"],
       "description": "Version number of the behavior"
     },
     "code": {
