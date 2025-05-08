@@ -416,63 +416,57 @@ Behavior_Finding_Schema = {
     "id": {
       "type": "string",
       "format": "uuid",
-      "description": "Unique identifier for the behavior"
+      "description": "Unique identifier"
     },
     "version": {
       "type": ["string", "number"],
-      "description": "Version number of the behavior"
+      "description": "Version number"
     },
     "code": {
       "type": "string",
-      "description": "Code representing the behavior"
+      "description": "Code identifier"
     },
     "name": {
       "type": "string",
-      "description": "Name of the behavior"
+      "description": "Name of the rule"
     },
     "type": {
       "type": "string",
-      "enum": [
-        "behavior"
-      ],
-      "description": "Type of the configuration, should be 'behavior'"
+      "enum": ["behavior", "datarisk", "devicerisk", "mfarisk", "passwordhygiene", "saasrisk"],
+      "description": "Type of rule"
     },
     "createdon": {
       "type": "integer",
-      "description": "Timestamp of creation"
+      "description": "Creation timestamp"
     },
     "updatedon": {
       "type": "integer",
-      "description": "Timestamp of last update"
+      "description": "Last update timestamp"
     },
-    "psture": {
+    "posture": {
       "type": "array",
-      "items": {
-        "type": "string"
-      },
-      "description": "List of postures associated with the behavior"
+      "items": { "type": "string" },
+      "description": "Associated posture IDs"
     },
     "browser_enabled": {
       "type": "boolean",
-      "description": "Indicates if the behavior is enabled in the browser"
+      "description": "Is enabled in browser"
     },
     "description": {
       "type": "string",
-      "description": "Description of the behavior"
+      "description": "Description"
     },
     "query": {
       "type": "string",
-      "description": "SQL query associated with the behavior"
+      "description": "Query string"
     },
     "config": {
       "type": "object",
       "properties": {
         "datasourcetype": {
           "type": "string",
-          "enum": [
-            "datalake"
-          ],
-          "description": "Type of data source"
+          "enum": ["datalake"],
+          "description": "Data source type"
         },
         "expression": {
           "type": "string",
@@ -480,21 +474,17 @@ Behavior_Finding_Schema = {
         },
         "type": {
           "type": "string",
-          "description": "Type of event"
+          "description": "Event type"
         },
         "subtype": {
           "type": "string",
-          "enum": [
-            "event"
-          ],
+          "enum": ["event"],
           "description": "Subtype of event"
         },
         "status": {
           "type": "string",
-          "enum": [
-            "open"
-          ],
-          "description": "Status of the event"
+          "enum": ["open"],
+          "description": "Status"
         },
         "code": {
           "type": "string",
@@ -502,78 +492,127 @@ Behavior_Finding_Schema = {
         },
         "sla": {
           "type": "string",
-          "description": "Service Level Agreement"
+          "description": "SLA"
         },
         "entity": {
           "type": "string",
-          "description": "Entity associated with the event"
+          "description": "Entity"
         },
         "entitytype": {
           "type": "string",
-          "enum": [
-            "user"
-          ],
-          "description": "Type of entity"
+          "enum": ["user"],
+          "description": "Entity type"
         },
         "tags": {
           "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "description": "List of tags"
+          "items": { "type": "string" },
+          "description": "Tags"
         },
         "sourceofalert": {
           "type": "string",
-          "description": "Source of the alert"
+          "description": "Source of alert"
         },
         "template": {
           "type": "string",
-          "description": "Template for the alert message"
+          "description": "Alert template"
         },
         "artifacts": {
-          "type": "string",
-          "description": "Artifacts associated with the alert"
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": { "type": "string" },
+              "property": { "type": "string" },
+              "value": { "type": "string" },
+              "artifactproperties": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "artifactValue": { "type": "string" },
+                    "displayInUI": { "type": "string" }
+                  },
+                  "required": ["artifactValue", "displayInUI"]
+                }
+              }
+            },
+            "required": ["type", "property", "value"]
+          }
         },
         "properties": {
-          "type": "string",
-          "description": "Properties associated with the alert"
+          "type": "object",
+          "properties": {
+            "userId": { "type": "string" },
+            "userName": { "type": "string" },
+            "userMail": { "type": "string" },
+            "userAccountEnabled": { "type": "string" },
+            "TENANT": { "type": "string" },
+            "SUBSCRIBER": { "type": "string" },
+            "appName": { "type": "string" },
+            "appUrl": { "type": "string" },
+            "appId": { "type": "string" },
+            "appCategory": { "type": "string" },
+            "appDomain": { "type": "string" },
+            "context_id": { "type": "string" },
+            "time": { "type": "string" }
+          },
+          "required": [
+            "userId", "userName", "userMail", "userAccountEnabled",
+            "TENANT", "SUBSCRIBER", "appName", "appUrl", "appId",
+            "appCategory", "appDomain", "context_id", "time"
+          ]
         }
       },
       "required": [
-        "expression",
-        "type",
-        "subtype",
-        "status",
-        "code",
-        "sla",
-        "entity",
-        "entitytype",
-        "tags",
-        "sourceofalert",
-        "template",
-        "artifacts",
-        "properties",
+        "datasourcetype", "expression", "type", "subtype", "status",
+        "code", "sla", "entity", "entitytype", "tags",
+        "sourceofalert", "template", "artifacts", "properties"
       ]
     },
     "lambda": {
       "type": "string",
       "description": "Lambda function code"
+    },
+    "deviceRisk": {
+      "type": "object",
+      "properties": {
+        "deviceType": { "type": "string" },
+        "riskScore": { "type": "number" },
+        "details": { "type": "string" }
+      },
+      "required": ["deviceType", "riskScore"]
+    },
+    "mfaRisk": {
+      "type": "object",
+      "properties": {
+        "mfaEnabled": { "type": "boolean" },
+        "riskLevel": { "type": "string" },
+        "lastMfaVerification": { "type": "string" }
+      },
+      "required": ["mfaEnabled"]
+    },
+    "passwordHygiene": {
+      "type": "object",
+      "properties": {
+        "passwordStrength": { "type": "string" },
+        "lastPasswordChange": { "type": "string" },
+        "passwordReuse": { "type": "boolean" }
+      },
+      "required": ["passwordStrength"]
+    },
+    "saasRisk": {
+      "type": "object",
+      "properties": {
+        "saasApplication": { "type": "string" },
+        "riskScore": { "type": "number" },
+        "complianceStatus": { "type": "string" }
+      },
+      "required": ["saasApplication", "riskScore"]
     }
   },
   "required": [
-    "id",
-    "version",
-    "code",
-    "name",
-    "type",
-    "createdon",
-    "updatedon",
-    "posture",
-    "browser_enabled",
-    "description",
-    "query",
-    "config",
-    "lambda"
+    "id", "version", "code", "name", "type", "createdon", "updatedon",
+    "posture", "browser_enabled", "description", "query", "config", "lambda"
   ]
 }
 def main():
