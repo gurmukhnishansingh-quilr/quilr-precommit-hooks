@@ -778,6 +778,77 @@ execution_module_schema = {
     "actions"
   ]
 }
+template_schema = {
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Name of the message"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["message"],
+      "description": "Type of the message"
+    },
+    "channel": {
+      "type": "string",
+      "description": "Channel where message is sent"
+    },
+    "content": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "string",
+          "description": "Header of the message"
+        },
+        "title": {
+          "type": "string",
+          "description": "Main content of the message"
+        },
+        "description": {
+          "type": "string",
+          "description": "Additional description"
+        },
+        "acknowledgedButtons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Button ID"
+              },
+              "isPrimary": {
+                "type": "boolean",
+                "description": "Is this the primary button"
+              },
+              "name": {
+                "type": "string",
+                "description": "Button label"
+              },
+              "whitelist": {
+                "type": "boolean",
+                "description": "Whitelist status"
+              }
+            },
+            "required": ["id", "isPrimary", "name", "whitelist"]
+          }
+        }
+      },
+      "required": ["header", "title", "acknowledgedButtons"]
+    },
+    "rendered_content_type": {
+      "type": "string",
+      "description": "Content type of the message",
+      "enum": ["application/json"]
+    },
+    "is_active": {
+      "type": "boolean",
+      "description": "Is the message active"
+    }
+  },
+  "required": ["name", "type", "channel", "content", "rendered_content_type", "is_active"]
+}
 def main():
     for filename in sys.argv[1:]:
         with open(filename, 'r') as f:
@@ -816,6 +887,9 @@ def main():
                 elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
                     validate(instance=data, schema=execution_module_schema)
                     print(f"✅ {filename} is valid")
+                elif filename.find("quilr-playbook-service/static/templates") != -1:
+                    validate(instance=data, schema=template_schema)
+                    print(f"✅ {filename} is valid")    
                     
                 else:
                     print(f"❌ {filename} has an unknown type: {data.get('type')}")
