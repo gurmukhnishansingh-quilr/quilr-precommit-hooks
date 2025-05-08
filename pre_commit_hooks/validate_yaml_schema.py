@@ -553,7 +553,7 @@ Behavior_Finding_Schema = {
         "sourceofalert",
         "template",
         "artifacts",
-        "properties"
+        "properties",
         "posture"
       ]
     },
