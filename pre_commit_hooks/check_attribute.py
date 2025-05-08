@@ -41,11 +41,11 @@ def main(argv: Sequence[str] | None = None) -> int:
             file = yaml.safe_load(f)
         if filename.find("classification-config-service/use-case/") != -1:
             for attribute in file['condition']:
-                if attribute['filter_condition']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
+                if attribute['filter_condition']['attribute_id'] not in getallattribute("./static-files/classification-config-service/attributes"):
                     return 1
         elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
             for attribute in file['trigger_conditions']:
-                if attribute['filter_condition']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
+                if attribute['filter_condition']['attribute_id'] not in getallattribute("./static-files/classification-config-service/attributes"):
                     print(f"❌ Attribute {attribute['filter_condition']['attribute_id']} in {filename} is not defined in attributes")
                     return 1        
     return retval
