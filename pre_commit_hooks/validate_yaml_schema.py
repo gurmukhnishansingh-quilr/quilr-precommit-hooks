@@ -383,9 +383,9 @@ Attributes_Schema ={
               "type": "object",
               "required": ["label", "value", ],
               "properties": {
-                "label": { "type": ["string", "int", "boolean", "number", "datetime"] },
+                "label": { "type": ["string", "number", "boolean"] },
                 "value": {
-                  "type": ["string", "int", "boolean", "number", "datetime"]
+                  "type": ["string", "boolean", "number"]
                 },
                 "tags": {
                   "type": ["array", "null"],
