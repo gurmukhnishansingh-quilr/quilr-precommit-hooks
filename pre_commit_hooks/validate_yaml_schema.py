@@ -327,7 +327,216 @@ jit_schema = {
     "updatedon"
   ]
 }
-    
+Application_Attributes_Schema ={
+  "type": "object",
+  "required": ["id", "version", "category", "code", "tags", "type", "attributes"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "version": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "code": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "type": {
+      "type": "string",
+      "enum": ["attributes"]
+    },
+    "attributes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "description", "duplicate_allowed", "graph_property", "expected_datatype", "supported_operators", "id"],
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "duplicate_allowed": { "type": "boolean" },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "graph_property": {
+            "type": ["string", "null"]
+          },
+          "extension_property": {
+            "type": ["string", "null"]
+          },
+          "expected_datatype": {
+            "type": "string",
+            "enum": ["string", "int", "boolean", "datetime"]
+          },
+          "possible_values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "value"],
+              "properties": {
+                "label": { "type": "string" },
+                "value": {
+                  "type": ["string", "number", "boolean"]
+                },
+                "tags": {
+                  "type": ["array", "null"],
+                  "items": { "type": "string" }
+                }
+              }
+            }
+          },
+          "possible_values_query": {
+            "type": ["string", "null"]
+          },
+          "is_searchable": {
+            "type": ["boolean", "null"]
+          },
+          "supported_operators": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "id": { "type": "string" }
+        }
+      }
+    }
+  }
+}
+Behavior_Finding_Schema = {
+  "type": "object",
+  "required": ["id", "version", "code", "name", "type", "description", "query", "config", "entity", "status", "subtype"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "version": {
+      "type": "number"
+    },
+    "code": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "createdon": {
+      "type": "number"
+    },
+    "updatedon": {
+      "type": "number"
+    },
+    "posture": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "browser_enabled": {
+      "type": "boolean"
+    },
+    "description": {
+      "type": "string"
+    },
+    "query": {
+      "type": "string"
+    },
+    "config": {
+      "type": "object",
+      "required": ["expression"],
+      "properties": {
+        "expression": {
+          "type": "string"
+        }
+      }
+    },
+    "subtype": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["open", "closed"]
+    },
+    "sla": {
+      "type": "string"
+    },
+    "entity": {
+      "type": "string"
+    },
+    "entitytype": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sourceofalert": {
+      "type": "string"
+    },
+    "template": {
+      "type": "string"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "property", "value", "artifactproperties", "artifactKey"],
+        "properties": {
+          "type": { "type": "string" },
+          "context": { "type": "string" },
+          "property": { "type": "string" },
+          "value": { "type": "string" },
+          "artifactKey": { "type": "string" },
+          "artifactproperties": {
+            "type": "object",
+            "properties": {
+              "artifactValue": { "type": "string" },
+              "displayInUI": { "type": "string", "enum": ["enabled", "disabled"] }
+            },
+            "required": ["artifactValue", "displayInUI"]
+          }
+        }
+      }
+    },
+    "properties": {
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "userMail": { "type": "string" },
+        "userAccountEnabled": { "type": ["boolean", "string"] },
+        "TENANT": { "type": "string" },
+        "SUBSCRIBER": { "type": "string" },
+        "appName": { "type": "string" },
+        "appUrl": { "type": "string" },
+        "appId": { "type": "string" },
+        "accountId": { "type": "string" },
+        "appCategory": { "type": ["string", "array"] },
+        "scope": { "type": ["string", "array"] },
+        "consentBy": { "type": "string" },
+        "appDomain": { "type": "string" }
+      }
+    },
+    "lambda": {
+      "type": "string"
+    },
+    "disabled": {
+      "type": "boolean"
+    }
+  }
+}
 def main():
     for filename in sys.argv[1:]:
         with open(filename, 'r') as f:
@@ -357,6 +566,12 @@ def main():
                 elif data.get("type") == "use-case":
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
+                elif data.get("type") == "attributes":
+                    validate(instance=data, schema=Application_Attributes_Schema)
+                    print(f"✅ {filename} is valid")
+                elif data.get("type") == "behavior":
+                    validate(instance=data, schema=Behavior_Finding_Schema)
+                    print(f"✅ {filename} is valid")   
                     
                 else:
                     print(f"❌ {filename} has an unknown type: {data.get('type')}")
