@@ -540,7 +540,6 @@ Behavior_Finding_Schema = {
         }
       },
       "required": [
-        "datasourcetype",
         "expression",
         "type",
         "subtype",
