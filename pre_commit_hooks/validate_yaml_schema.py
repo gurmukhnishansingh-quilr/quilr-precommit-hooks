@@ -412,130 +412,170 @@ Attributes_Schema ={
 }
 Behavior_Finding_Schema = {
   "type": "object",
-  "required": ["id", "version", "code", "name", "type", "description", "query", "config", "entity", "status", "subtype"],
   "properties": {
     "id": {
       "type": "string",
-      "format": "uuid"
+      "format": "uuid",
+      "description": "Unique identifier for the behavior"
     },
     "version": {
-      "type": "number"
+      "type": "string",
+      "description": "Version number of the behavior"
     },
     "code": {
-      "type": "string"
+      "type": "string",
+      "description": "Code representing the behavior"
     },
     "name": {
-      "type": "string"
+      "type": "string",
+      "description": "Name of the behavior"
     },
     "type": {
-      "type": "string"
+      "type": "string",
+      "enum": [
+        "behavior"
+      ],
+      "description": "Type of the configuration, should be 'behavior'"
     },
     "createdon": {
-      "type": "number"
+      "type": "integer",
+      "description": "Timestamp of creation"
     },
     "updatedon": {
-      "type": "number"
+      "type": "integer",
+      "description": "Timestamp of last update"
     },
-    "posture": {
+    "psture": {
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "description": "List of postures associated with the behavior"
     },
     "browser_enabled": {
-      "type": "boolean"
+      "type": "boolean",
+      "description": "Indicates if the behavior is enabled in the browser"
     },
     "description": {
-      "type": "string"
+      "type": "string",
+      "description": "Description of the behavior"
     },
     "query": {
-      "type": "string"
+      "type": "string",
+      "description": "SQL query associated with the behavior"
     },
     "config": {
       "type": "object",
-      "required": ["expression"],
       "properties": {
+        "datasourcetype": {
+          "type": "string",
+          "enum": [
+            "datalake"
+          ],
+          "description": "Type of data source"
+        },
         "expression": {
-          "type": "string"
-        }
-      }
-    },
-    "subtype": {
-      "type": "string"
-    },
-    "status": {
-      "type": "string",
-      "enum": ["open", "closed"]
-    },
-    "sla": {
-      "type": "string"
-    },
-    "entity": {
-      "type": "string"
-    },
-    "entitytype": {
-      "type": "string"
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "sourceofalert": {
-      "type": "string"
-    },
-    "template": {
-      "type": "string"
-    },
-    "artifacts": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["type", "property", "value", "artifactproperties", "artifactKey"],
+          "type": "string",
+          "description": "Expression for data processing"
+        },
+        "type": {
+          "type": "string",
+          "description": "Type of event"
+        },
+        "subtype": {
+          "type": "string",
+          "enum": [
+            "event"
+          ],
+          "description": "Subtype of event"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open"
+          ],
+          "description": "Status of the event"
+        },
+        "code": {
+          "type": "string",
+          "description": "Rule code"
+        },
+        "sla": {
+          "type": "string",
+          "description": "Service Level Agreement"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity associated with the event"
+        },
+        "entitytype": {
+          "type": "string",
+          "enum": [
+            "user"
+          ],
+          "description": "Type of entity"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of tags"
+        },
+        "sourceofalert": {
+          "type": "string",
+          "description": "Source of the alert"
+        },
+        "template": {
+          "type": "string",
+          "description": "Template for the alert message"
+        },
+        "artifacts": {
+          "type": "string",
+          "description": "Artifacts associated with the alert"
+        },
         "properties": {
-          "type": { "type": "string" },
-          "context": { "type": "string" },
-          "property": { "type": "string" },
-          "value": { "type": "string" },
-          "artifactKey": { "type": "string" },
-          "artifactproperties": {
-            "type": "object",
-            "properties": {
-              "artifactValue": { "type": "string" },
-              "displayInUI": { "type": "string", "enum": ["enabled", "disabled"] }
-            },
-            "required": ["artifactValue", "displayInUI"]
-          }
+          "type": "string",
+          "description": "Properties associated with the alert"
         }
-      }
-    },
-    "properties": {
-      "type": "object",
-      "properties": {
-        "userId": { "type": "string" },
-        "userName": { "type": "string" },
-        "userMail": { "type": "string" },
-        "userAccountEnabled": { "type": ["boolean", "string"] },
-        "TENANT": { "type": "string" },
-        "SUBSCRIBER": { "type": "string" },
-        "appName": { "type": "string" },
-        "appUrl": { "type": "string" },
-        "appId": { "type": "string" },
-        "accountId": { "type": "string" },
-        "appCategory": { "type": ["string", "array"] },
-        "scope": { "type": ["string", "array"] },
-        "consentBy": { "type": "string" },
-        "appDomain": { "type": "string" }
-      }
+      },
+      "required": [
+        "datasourcetype",
+        "expression",
+        "type",
+        "subtype",
+        "status",
+        "code",
+        "sla",
+        "entity",
+        "entitytype",
+        "tags",
+        "sourceofalert",
+        "template",
+        "artifacts",
+        "properties"
+      ]
     },
     "lambda": {
-      "type": "string"
-    },
-    "disabled": {
-      "type": "boolean"
+      "type": "string",
+      "description": "Lambda function code"
     }
-  }
+  },
+  "required": [
+    "id",
+    "version",
+    "code",
+    "name",
+    "type",
+    "createdon",
+    "updatedon",
+    "psture",
+    "browser_enabled",
+    "description",
+    "query",
+    "config",
+    "lambda"
+  ]
 }
 def main():
     for filename in sys.argv[1:]:
