@@ -345,7 +345,7 @@ Attributes_Schema ={
       "type": "string"
     },
     "tags": {
-      "type": ["array", "null"],
+      "type": ["array", "None"],
       "items": {
         "type": "string"
       }
