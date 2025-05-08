@@ -39,10 +39,14 @@ def main(argv: Sequence[str] | None = None) -> int:
     for filename in args.filenames:
         with open(filename, mode='r') as f:
             file = yaml.safe_load(f)
-        if file['type'] == 'use-case':
+        if filename.find("classification-config-service/use-case/") != -1:
             for attribute in file['condition']:
                 if attribute['filter_condition']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
                     return 1
+        elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
+            for attribute in file['condition']:
+                if attribute['trigger_conditions']['attribute_id'] not in getallattribute("/Users/gurmukhnishansingh/Development/content-management-service/static-files/classification-config-service/attributes"):
+                    return 1        
     return retval
 
 
