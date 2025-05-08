@@ -554,7 +554,6 @@ Behavior_Finding_Schema = {
         "template",
         "artifacts",
         "properties",
-        "posture"
       ]
     },
     "lambda": {
@@ -570,7 +569,7 @@ Behavior_Finding_Schema = {
     "type",
     "createdon",
     "updatedon",
-    "psture",
+    "posture",
     "browser_enabled",
     "description",
     "query",
