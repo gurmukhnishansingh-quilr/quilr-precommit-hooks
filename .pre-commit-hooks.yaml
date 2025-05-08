@@ -26,9 +26,9 @@
     additional_dependencies:
         - jsonschema
         - PyYAML
--   id: validate_uuid.py
+-   id: validate_uuid
     name: validate uuid
     description: validates uuid in yaml files
-    entry: validate-uuid.py
+    entry: validate-uuid
     language: python
     types: [yaml]
