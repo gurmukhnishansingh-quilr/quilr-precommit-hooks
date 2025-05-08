@@ -327,7 +327,7 @@ jit_schema = {
     "updatedon"
   ]
 }
-Application_Attributes_Schema ={
+Attributes_Schema ={
   "type": "object",
   "required": ["id", "version", "category", "code", "tags", "type", "attributes"],
   "properties": {
@@ -345,7 +345,7 @@ Application_Attributes_Schema ={
       "type": "string"
     },
     "tags": {
-      "type": "array",
+      "type": ["array", "null"],
       "items": {
         "type": "string"
       }
@@ -567,7 +567,7 @@ def main():
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
                 elif data.get("type") == "attributes":
-                    validate(instance=data, schema=Application_Attributes_Schema)
+                    validate(instance=data, schema=Attributes_Schema)
                     print(f"✅ {filename} is valid")
                 elif data.get("type") == "behavior":
                     validate(instance=data, schema=Behavior_Finding_Schema)
