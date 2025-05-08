@@ -615,6 +615,169 @@ Behavior_Finding_Schema = {
     "posture", "browser_enabled", "description", "query", "config", "lambda"
   ]
 }
+execution_module_schema = {
+  "type": "object",
+  "properties": {
+    "criticality": {
+      "type": "integer",
+      "description": "Criticality level of the control"
+    },
+    "mode": {
+      "type": "string",
+      "description": "Mode of operation, e.g., monitor"
+    },
+    "control_name": {
+      "type": "string",
+      "description": "Name of the control"
+    },
+    "control_description": {
+      "type": "string",
+      "description": "Description of the control"
+    },
+    "posture": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Posture ID"
+        }
+      },
+      "required": ["id"]
+    },
+    "behavior": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Behavior ID"
+        }
+      },
+      "required": ["id"]
+    },
+    "use_case": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Use case ID"
+        }
+      },
+      "required": ["id"]
+    },
+    "trigger_conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "operator": {
+            "type": ["string", "null"]
+          },
+          "filter_condition": {
+            "type": "object",
+            "properties": {
+              "attribute_type": {
+                "type": "string"
+              },
+              "attribute_id": {
+                "type": "string"
+              },
+              "condition": {
+                "type": "string"
+              },
+              "value": {
+                "type": "string"
+              }
+            },
+            "required": ["attribute_type", "attribute_id", "condition", "value"]
+          },
+          "filter_group": {
+            "type": ["null"]
+          },
+          "editable": {
+            "type": "boolean"
+          },
+          "supported_operators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": ["filter_condition", "operator", "editable"]
+      }
+    },
+    "filter_group": {
+      "type": "null"
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": ["id"]
+          },
+          "name": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              }
+            },
+            "required": ["id"]
+          },
+          "description": {
+            "type": "string"
+          },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "channel": { "type": "string" },
+              "engagement_type": { "type": "string" },
+              "message_template": { "type": "string" },
+              "execution_type": { "type": "string" },
+              "execution_module": { "type": "string" },
+              "browser_action": { "type": "string" },
+              "prompt_frequency": { "type": "string" },
+              "default_conversation_params": {
+                "type": "object",
+                "properties": {
+                  "is_urgent": { "type": "boolean" },
+                  "tone": { "type": "string" },
+                  "cc_manager": { "type": "boolean" },
+                  "sla": { "type": "string" },
+                  "sla_duration_unit": { "type": "string" },
+                  "reminder_count": { "type": "integer" },
+                  "custom_message": { "type": "string" }
+                }
+              },
+              "custom_conversation_params": { "type": "object" }
+            }
+          }
+        },
+        "required": ["type", "name", "meta"]
+      }
+    }
+  },
+  "required": [
+    "criticality",
+    "mode",
+    "control_name",
+    "control_description",
+    "posture",
+    "behavior",
+    "use_case",
+    "trigger_conditions",
+    "filter_group",
+    "actions"
+  ]
+}
 def main():
     for filename in sys.argv[1:]:
         with open(filename, 'r') as f:
@@ -628,7 +791,7 @@ def main():
                 print(f"❌ {filename} is not a valid YAML object.")
                 sys.exit(1)
             try:
-                if data.get("type") == "action": 
+                if filename.find("classification-config-service/action/") != -1:
                     validate(instance=data, schema=base_action_schema)
                     print(f"✅ {filename} is valid")
                     if data.get("type") == "action" and data.get("actiontype") == "ACTP_01":
@@ -641,15 +804,18 @@ def main():
                         validate(instance=data, schema=deploy_agent_schema)
                         print(f"✅ {filename} is valid")           
                 
-                elif data.get("type") == "use-case":
+                elif filename.find("classification-config-service/use-case/") != -1:
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
-                elif data.get("type") == "attributes":
+                elif filename.find("classification-config-service/attributes/") != -1:
                     validate(instance=data, schema=Attributes_Schema)
                     print(f"✅ {filename} is valid")
-                elif data.get("type") == "behavior":
+                elif filename.find("classification-config-service/behavior/") != -1:
                     validate(instance=data, schema=Behavior_Finding_Schema)
-                    print(f"✅ {filename} is valid")   
+                    print(f"✅ {filename} is valid")
+                elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
+                    validate(instance=data, schema=execution_module_schema)
+                    print(f"✅ {filename} is valid")
                     
                 else:
                     print(f"❌ {filename} has an unknown type: {data.get('type')}")
