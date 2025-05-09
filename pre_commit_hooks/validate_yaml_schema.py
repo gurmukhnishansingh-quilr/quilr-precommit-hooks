@@ -8,11 +8,11 @@ base_action_schema = {
   "type": "object",
   "properties": {
     "id": { "type": "string", "format": "uuid" },
-    "version": { "type": "string" },
+    "version": { "type": ["string", "number"]},
     "code": { "type": "string" },
     "name": { "type": "string" },
     "description": { "type": "string" },
-    "type": { "type": ["string", "number"]},
+    "type": { "type": "string" },
     "actiontype": { "type": "string" },
     "config": {
       "type": "object",
