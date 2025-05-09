@@ -12,7 +12,7 @@ base_action_schema = {
     "code": { "type": "string" },
     "name": { "type": "string" },
     "description": { "type": "string" },
-    "type": { "type": "string" },
+    "type": { "type": ["string", "number"]},
     "actiontype": { "type": "string" },
     "config": {
       "type": "object",
