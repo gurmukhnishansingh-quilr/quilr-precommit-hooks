@@ -79,13 +79,13 @@ use_case_schema = {
     "required": ["id", "version", "code", "name", "type", "description", "posture", "behavior", "condition", "disabled", "createdon", "updatedon"]
 }
 deploy_agent_schema = {
+  "title": "Action Schema",
   "type": "object",
   "properties": {
     "id": { "type": "string", "format": "uuid" },
     "version": { "type": ["string", "number"] },
     "code": { "type": "string" },
     "name": { "type": "string" },
-    "description": { "type": "string" },
     "type": { "type": "string" },
     "actiontype": { "type": "string" },
     "config": {
@@ -94,116 +94,63 @@ deploy_agent_schema = {
         "meta": {
           "type": "object",
           "properties": {
-            "category": { "type": "string" },
-            "info": { "type": "string" },
-            "description": { "type": "string" }
-          },
-          "required": ["category", "info", "description"]
-        },
-        "execution_type": { "type": "string" },
-        "execution_module": { "type": "string" },
-        "agent_configuration": {
-          "type": "object",
-          "properties": {
-            "agent_instructions": { "type": "string" }
-          },
-          "required": ["agent_instructions"]
-        },
-        "context_instructions": { "type": "string" },
-        "tools_access": {
-          "type": "object",
-          "properties": {
-            "microsoft_scheduler": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "tool": { "type": "string" },
-                  "label": { "type": "string" }
-                },
-                "required": ["tool", "label"]
-              }
-            },
-            "quilr": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "tool": { "type": "string" },
-                  "label": { "type": "string" }
-                },
-                "required": ["tool", "label"]
-              }
-            },
-            "quilr_reminder": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "tool": { "type": "string" },
-                  "label": { "type": "string" }
-                },
-                "required": ["tool", "label"]
-              }
-            },
-            "slack": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "tool": { "type": "string" },
-                  "label": { "type": "string" }
-                },
-                "required": ["tool", "label"]
-              }
+            "execution_type": { "type": "string" },
+            "execution_module": { "type": "string" },
+            "agent_configuration": {
+              "type": "object",
+              "properties": {
+                "agent_instructions": { "type": "string" },
+                "context_instructions": { "type": "string" },
+                "tools_access": {"type": "object"},
+                "output_instructions": { "type": "string" },
+                "communication": { "type": "string" },
+                "guardrails": {
+                  "type": ["object", "null"]
+                }
+              },
+              "required": [
+                "agent_instructions",
+                "context_instructions",
+                "tools_access",
+                "output_instructions",
+                "communication",
+                "guardrails"
+              ]
             }
-          }
-        },
-        "output_instructions": { "type": "string" },
-        "communication": { "type": "string" },
-        "guardrails": { "type": ["string", "null"] },
-        "embedding": { "type": "boolean" },
-        "outcomes": {
-          "type": "array",
-          "items": {}
-        },
-        "tags": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "behavior": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "createdon": { "type": "integer" },
-        "updatedon": { "type": "integer" }
+          },
+          "required": ["execution_type", "execution_module", "agent_configuration"]
+        }
       },
-      "required": [
-        "meta",
-        "execution_type",
-        "execution_module",
-        "agent_configuration",
-        "context_instructions",
-        "tools_access",
-        "output_instructions",
-        "communication",
-        "outcomes",
-        "tags",
-        "behavior",
-        "createdon",
-        "updatedon"
-      ]
-    }
+      "required": ["meta"]
+    },
+    "outcomes": {
+      "type": "array",
+      "items": {}
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "behavior": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "createdon": { "type": "integer" },
+    "updatedon": { "type": "integer" }
   },
   "required": [
     "id",
     "version",
     "code",
     "name",
-    "description",
     "type",
     "actiontype",
-    "config"
+    "config",
+    "outcomes",
+    "tags",
+    "behavior",
+    "createdon",
+    "updatedon"
   ]
 }
 engage_agent_schema = {
