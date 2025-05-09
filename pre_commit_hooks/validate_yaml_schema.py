@@ -105,7 +105,7 @@ deploy_agent_schema = {
                 "output_instructions": { "type": "string" },
                 "communication": { "type": "string" },
                 "guardrails": {
-                  "type": ["object", "null"]
+                  "type": ["array", "null"]
                 }
               },
               "required": [
