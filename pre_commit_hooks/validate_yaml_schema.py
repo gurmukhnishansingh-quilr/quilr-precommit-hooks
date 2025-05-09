@@ -86,7 +86,10 @@ deploy_agent_schema = {
     "version": { "type": ["string", "number"] },
     "code": { "type": "string" },
     "name": { "type": "string" },
-    "type": { "type": "string" },
+    "type": {
+     "type": "string",
+     "enum": ["use-case"]
+    },
     "actiontype": { "type": "string" },
     "config": {
       "type": "object",
