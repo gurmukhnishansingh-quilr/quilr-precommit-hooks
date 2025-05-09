@@ -11,6 +11,7 @@ def is_valid_uuid(val):
         return False
 
 def main():
+    seen_uuids = set()
     for filename in sys.argv[1:]:
         with open(filename, 'r') as f:
             try:
@@ -28,11 +29,19 @@ def main():
             print(f"❌ {filename} missing 'id' field.")
             sys.exit(1)
 
+        # Check if UUID is valid
         if not is_valid_uuid(id_value):
             print(f"❌ {filename} has invalid UUID: {id_value}")
             sys.exit(1)
 
-        print(f"✅ {filename} has valid UUID.")
+        # Check for duplicate UUIDs
+        if id_value in seen_uuids:
+            print(f"❌ Duplicate UUID found in {filename}: {id_value}")
+            sys.exit(1)
+        else:
+            seen_uuids.add(id_value)
+
+        print(f"✅ {filename} has valid and unique UUID.")
 
 if __name__ == "__main__":
     sys.exit(main())
