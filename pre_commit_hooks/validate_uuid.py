@@ -5,6 +5,8 @@ import yaml
 import uuid
 import argparse
 import re
+from collections.abc import Generator
+from collections.abc import Sequence
 
 def is_valid_uuid(val):
     try:
