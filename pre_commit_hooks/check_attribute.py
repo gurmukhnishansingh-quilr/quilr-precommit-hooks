@@ -8,19 +8,21 @@ import yaml
 from pathlib import Path
 
 def getallattribute(location: str):
-    attributes = {}
+    attributes = []
     for yaml_file in Path(location).rglob("*.yaml"):
         with open(yaml_file, 'r') as file:
             data = yaml.safe_load(file)
         for attribute in data['attributes']:
-            attributes[attribute.get('id')] = attribute.get('tags')
+            attributes.append(attribute.get('id'))
     return attributes
         
 list_of_operators = [
-  "is equal to",
-  "is less than equal to",
-  "is not equal to",
+  "is greater than",
   "is less than",
+  "is equal to",
+  "is not equal to",
+  "is less than equal to",
+  "is not in",
   "is in"
 ]
 

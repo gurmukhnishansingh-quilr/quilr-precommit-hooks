@@ -5,3 +5,6 @@ repos:
     -   id: check-yaml
     -   id: check-attribute
     -   id: check-version
+    -   id: validate-schema
+    -   id: validate-id
+    -   id: check-attribute-tag
