@@ -16,7 +16,12 @@ def getallattribute(location: str):
             attributes.append(attribute.get('id'))
     return attributes
         
-
+list_of_operators = [
+  "is equal to",
+  "is less than equal to",
+  "is not equal to",
+  "is less than"
+]
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
@@ -42,12 +47,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         if filename.find("classification-config-service/use-case/") != -1:
             for attribute in file['condition']:
                 if attribute['filter_condition']['attribute_id'] not in getallattribute("./static-files/classification-config-service/attributes"):
+                    print(f"❌ Attribute {attribute['filter_condition']['attribute_id']} in {filename} is not defined in attributes")
+                    return 1
+                if attribute['filter_condition']['condition'] not in list_of_operators:
+                    print(f"❌ Operator {attribute['filter_condition']['operator']} in {filename} is not defined in operators")
                     return 1
         elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
             for attribute in file['trigger_conditions']:
                 if attribute['filter_condition']['attribute_id'] not in getallattribute("./static-files/classification-config-service/attributes"):
                     print(f"❌ Attribute {attribute['filter_condition']['attribute_id']} in {filename} is not defined in attributes")
-                    return 1        
+                    return 1
+                if attribute['filter_condition']['condition'] not in list_of_operators:
+                    print(f"❌ Operator {attribute['filter_condition']['operator']} in {filename} is not defined in operators")
+                    return 1   
     return retval
 
 
