@@ -106,7 +106,7 @@ def main(argv: Sequence[str] | None = None):
 
         print(f"✅ {filename} has valid and unique UUID.")
 
-    if duplicate_found:
+    #if duplicate_found:
         sys.exit(1)
 
 if __name__ == "__main__":
