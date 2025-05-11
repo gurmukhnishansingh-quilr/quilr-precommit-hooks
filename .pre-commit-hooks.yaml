@@ -32,3 +32,9 @@
     entry: validate-id
     language: python
     types: [yaml]
+-   id: check-attribute-tag
+    name: validate uuid
+    description: validates uuid in yaml files
+    entry: check-attribute-tags
+    language: python
+    types: [yaml]

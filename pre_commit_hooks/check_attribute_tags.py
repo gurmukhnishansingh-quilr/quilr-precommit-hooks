@@ -4,15 +4,15 @@ from collections.abc import Sequence
 from collections.abc import Generator
 from typing import Any
 import argparse
-
+from pathlib import Path
 
 def getallattribute(location: str):
-    attributes = []
+    attributes = {}
     for yaml_file in Path(location).rglob("*.yaml"):
         with open(yaml_file, 'r') as file:
             data = yaml.safe_load(file)
         for attribute in data['attributes']:
-            attributes.append(attribute.get('id'))
+            attributes[attribute.get('id')] = attribute.get('tags')
     return attributes
         
 
@@ -38,5 +38,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         with open(filename, mode='r') as f:
             file = yaml.safe_load(f)
         if filename.find("classification-config-service/use-case/") != -1:
-            for 
+            for attribute in file['condition']:
+                if file.get('code') in all_attributes[attribute['filter_condition']['attribute_id']]:
+                    print(f"❌ Use-case {file.get('code')} is missing tags for attribute {attribute['filter_condition']['attribute_id']}")
+                    return 1
     return retval
