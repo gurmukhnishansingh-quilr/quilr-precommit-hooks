@@ -26,19 +26,13 @@
     additional_dependencies:
         - jsonschema
         - PyYAML
--   id: validate-id
-    name: validate uuid
-    description: validates uuid in yaml files
-    entry: validate-id
-    language: python
-    types: [yaml]
 -   id: check-attribute-tag
     name: validate uuid
     description: validates uuid in yaml files
     entry: check-attribute-tags
     language: python
     types: [yaml]
--   id: validate_tags
+-   id: validate-tags
     name: validate tags
     description: validates tags in yaml files
     entry: validate-tags
@@ -47,3 +41,9 @@
     additional_dependencies:
         - jsonschema
         - PyYAML
+-   id: validate-uuid
+    name: Validate UUIDs
+    entry: validate-uuid
+    language: python
+    types: [yaml]
+    
