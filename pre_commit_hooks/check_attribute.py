@@ -8,19 +8,20 @@ import yaml
 from pathlib import Path
 
 def getallattribute(location: str):
-    attributes = []
+    attributes = {}
     for yaml_file in Path(location).rglob("*.yaml"):
         with open(yaml_file, 'r') as file:
             data = yaml.safe_load(file)
         for attribute in data['attributes']:
-            attributes.append(attribute.get('id'))
+            attributes[attribute.get('id')] = attribute.get('tags')
     return attributes
         
 list_of_operators = [
   "is equal to",
   "is less than equal to",
   "is not equal to",
-  "is less than"
+  "is less than",
+  "is in"
 ]
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -50,7 +51,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     print(f"❌ Attribute {attribute['filter_condition']['attribute_id']} in {filename} is not defined in attributes")
                     return 1
                 if attribute['filter_condition']['condition'] not in list_of_operators:
-                    print(f"❌ Operator {attribute['filter_condition']['operator']} in {filename} is not defined in operators")
+                    print(f"❌ Operator {attribute['filter_condition']['condition']} in {filename} is not defined in operators")
                     return 1
         elif filename.find("quilr-playbook-service/static/execution_controls") != -1:
             for attribute in file['trigger_conditions']:
@@ -58,7 +59,7 @@ def main(argv: Sequence[str] | None = None) -> int:
                     print(f"❌ Attribute {attribute['filter_condition']['attribute_id']} in {filename} is not defined in attributes")
                     return 1
                 if attribute['filter_condition']['condition'] not in list_of_operators:
-                    print(f"❌ Operator {attribute['filter_condition']['operator']} in {filename} is not defined in operators")
+                    print(f"❌ Operator {attribute['filter_condition']['condition']} in {filename} is not defined in operators")
                     return 1   
     return retval
 
