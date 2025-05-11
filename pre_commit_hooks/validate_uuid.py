@@ -19,7 +19,7 @@ def all_unique_id(path):
     ids = []
     for root, dirs, files in os.walk(os.path.dirname(path)):
         for file in files:
-            if file != path:
+            if path.find(file) == -1:
                 if file.endswith('.yaml') or file.endswith('.yml'):
                     with open(os.path.join(root, file), 'r') as f:
                         data = yaml.safe_load(f)
@@ -31,12 +31,12 @@ def all_unique_code(path):
     code = []
     for root, dirs, files in os.walk(os.path.dirname(path)):
         for file in files:
-            if file != path:
+            if path.find(file) == -1:
                 if file.endswith('.yaml') or file.endswith('.yml'):
                     with open(os.path.join(root, file), 'r') as f:
                         data = yaml.safe_load(f)
-                        if isinstance(data, dict):
-                            code.append(data.get('code'))
+                    if isinstance(data, dict):
+                        code.append(data.get('code'))
     return code
 
 def check_code_format(code,contenttype):
