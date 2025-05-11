@@ -29,6 +29,6 @@
 -   id: validate-id
     name: validate uuid
     description: validates uuid in yaml files
-    entry: validate-uuid
+    entry: validate-id
     language: python
     types: [yaml]
