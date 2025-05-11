@@ -38,3 +38,12 @@
     entry: check-attribute-tags
     language: python
     types: [yaml]
+-   id: validate_tags
+    name: validate tags
+    description: validates tags in yaml files
+    entry: validate-tags
+    language: python
+    types: [yaml]
+    additional_dependencies:
+        - jsonschema
+        - PyYAML
