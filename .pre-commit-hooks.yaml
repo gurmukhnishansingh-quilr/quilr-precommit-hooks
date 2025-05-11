@@ -26,9 +26,9 @@
     additional_dependencies:
         - jsonschema
         - PyYAML
--   id: check-attribute-tag
-    name: validate uuid
-    description: validates uuid in yaml files
+-   id: check-attribute-tags
+    name: check attribute tags
+    description: checks if attribute tags are present in yaml files
     entry: check-attribute-tags
     language: python
     types: [yaml]
