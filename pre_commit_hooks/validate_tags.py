@@ -23,11 +23,17 @@ def main():
     with open(filename, 'r') as f:
         data = yaml.safe_load(f)
 
-    if not data or 'tags' not in data:
+    if not data or 'tags' not in data or data['tags'] is None:
         print(f"No tags found in {filename}")
         sys.exit(0)
 
-    for tag in data['tags']:
+    # Ensure data['tags'] is a list
+    tags = data['tags']
+    if not isinstance(tags, list):
+        print(f"Invalid 'tags' format in {filename}")
+        sys.exit(1)
+
+    for tag in tags:
         if not load_tags_from_use_case(tag):
             print(f"Tag '{tag}' in {filename} does not exist in use case folder.")
             sys.exit(1)
