@@ -4,7 +4,7 @@ from collections.abc import Sequence
 from collections.abc import Generator
 from typing import Any
 import argparse
-
+from pathlib import Path
 
 def getallattribute(location: str):
     attributes = {}
