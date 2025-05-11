@@ -89,7 +89,7 @@ def main(argv: Sequence[str] | None = None):
         if not is_valid_uuid(id_value):
             print(f"❌ {filename} has invalid UUID: {id_value}")
             sys.exit(1)
-        if id_value in all_unique_id(os.dirname(filename)):
+        if id_value in all_unique_id(filename):
             print(f"❌ Duplicate UUID found in {filename}: {id_value}")
             sys.exit(1)
         
