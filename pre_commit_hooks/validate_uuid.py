@@ -17,7 +17,7 @@ def is_valid_uuid(val):
 
 def all_unique_id(path):
     ids = []
-    for root, dirs, files in os.walk(os.dirname(path)):
+    for root, dirs, files in os.walk(os.path.dirname(path)):
         for file in files:
             if file != path:
                 if file.endswith('.yaml') or file.endswith('.yml'):
@@ -29,7 +29,7 @@ def all_unique_id(path):
 
 def all_unique_code(path):
     code = []
-    for root, dirs, files in os.walk(os.dirname(path)):
+    for root, dirs, files in os.walk(os.path.dirname(path)):
         for file in files:
             if file != path:
                 if file.endswith('.yaml') or file.endswith('.yml'):
