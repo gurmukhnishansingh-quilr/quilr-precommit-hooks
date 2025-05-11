@@ -52,7 +52,7 @@ def check_code_format(code,contenttype):
         return False
 
 
-def main():
+def main(argv: Sequence[str] | None = None):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         '-m', '--multi', '--allow-multiple-documents', action='store_true',
