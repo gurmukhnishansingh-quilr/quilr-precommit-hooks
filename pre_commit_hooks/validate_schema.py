@@ -824,7 +824,7 @@ def main():
                     elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
                         validate(instance=data, schema=deploy_agent_schema)
                         print(f"✅ {filename} is valid")
-                elif filename.find("classification-config-service/use-case/") != -1:
+                elif filename.find("classification-config-service/use_case/") != -1:
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
                 elif filename.find("classification-config-service/attributes/") != -1:
