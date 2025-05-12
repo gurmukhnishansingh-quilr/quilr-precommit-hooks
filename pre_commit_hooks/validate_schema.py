@@ -823,8 +823,7 @@ def main():
                         print(f"✅ {filename} is valid")
                     elif data.get("type") == "action" and data.get("actiontype") == "ACTP_04":
                         validate(instance=data, schema=deploy_agent_schema)
-                        print(f"✅ {filename} is valid")           
-                
+                        print(f"✅ {filename} is valid")
                 elif filename.find("classification-config-service/use-case/") != -1:
                     validate(instance=data, schema=use_case_schema)
                     print(f"✅ {filename} is valid")
@@ -839,8 +838,7 @@ def main():
                     print(f"✅ {filename} is valid")
                 elif filename.find("quilr-playbook-service/static/templates") != -1:
                     validate(instance=data, schema=template_schema)
-                    print(f"✅ {filename} is valid")    
-                    
+                    print(f"✅ {filename} is valid")  
                 else:
                     print(f"❌ {filename} has an unknown type: {data.get('type')}")
                     sys.exit(1)                   
