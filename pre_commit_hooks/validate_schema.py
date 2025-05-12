@@ -653,11 +653,8 @@ execution_module_schema = {
             }
           }
         },
-        "required": ["filter_condition", "operator", "editable"]
+        "required": ["filter_condition", "filter_group", "operator", "editable"]
       }
-    },
-    "filter_group": {
-      "type": "null"
     },
     "actions": {
       "type": "array",
@@ -724,7 +721,6 @@ execution_module_schema = {
     "behavior",
     "use_case",
     "trigger_conditions",
-    "filter_group",
     "actions"
   ]
 }
