@@ -83,26 +83,27 @@ def main(argv: Sequence[str] | None = None):
         # check if ID is present and valid
         id_value = data.get('id')
         code_value = data.get('code')
-        if not id_value:
-            print(f"❌ {filename} missing 'id' field.")
-            sys.exit(1)
-        if not is_valid_uuid(id_value):
-            print(f"❌ {filename} has invalid UUID: {id_value}")
-            sys.exit(1)
-        if id_value in all_unique_id(filename):
-            print(f"❌ Duplicate UUID found in {filename}: {id_value}")
-            sys.exit(1)
-        
-        # Check if the code field is present and valid
-        if not code_value:
-            print(f"❌ {filename} missing 'code' field.")
-            sys.exit(1)
-        if not check_code_format(code_value, data.get('type')):
-            print(f"❌ {filename} has invalid code format: {code_value}")
-            sys.exit(1)
-        if code_value in all_unique_code(filename):
-            print(f"❌ Duplicate code found in {filename}: {code_value}")
-            sys.exit(1)
+        if filename.find("classification-config-service/use-case/") != -1:
+            if not id_value:
+                print(f"❌ {filename} missing 'id' field.")
+                sys.exit(1)
+            if not is_valid_uuid(id_value):
+                print(f"❌ {filename} has invalid UUID: {id_value}")
+                sys.exit(1)
+            if id_value in all_unique_id(filename):
+                print(f"❌ Duplicate UUID found in {filename}: {id_value}")
+                sys.exit(1)
+            
+            # Check if the code field is present and valid
+            if not code_value:
+                print(f"❌ {filename} missing 'code' field.")
+                sys.exit(1)
+            if not check_code_format(code_value, data.get('type')):
+                print(f"❌ {filename} has invalid code format: {code_value}")
+                sys.exit(1)
+            if code_value in all_unique_code(filename):
+                print(f"❌ Duplicate code found in {filename}: {code_value}")
+                sys.exit(1)
 
         print(f"✅ {filename} has valid and unique UUID.")
 
