@@ -653,7 +653,7 @@ execution_module_schema = {
             }
           }
         },
-        "required": ["filter_condition", "filter_group", "operator", "editable"]
+        "required": ["filter_condition", "filter_group", "operator"]
       }
     },
     "actions": {
