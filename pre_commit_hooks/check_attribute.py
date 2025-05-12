@@ -23,7 +23,13 @@ list_of_operators = [
   "is not equal to",
   "is less than equal to",
   "is not in",
-  "is in"
+  "is in",
+  "is_equal_to",
+  "is_less_than_equal_to",
+  "is_not_equal_to",
+  "is_less_than",
+  "is_in",
+  "is_not_in"
 ]
 
 def main(argv: Sequence[str] | None = None) -> int:
