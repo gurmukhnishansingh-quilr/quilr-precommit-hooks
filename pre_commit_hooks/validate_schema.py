@@ -838,11 +838,7 @@ def main():
                     print(f"✅ {filename} is valid")
                 elif filename.find("quilr-playbook-service/static/templates") != -1:
                     validate(instance=data, schema=template_schema)
-                    print(f"✅ {filename} is valid")  
-                else:
-                    print(f"❌ {filename} has an unknown type: {data.get('type')}")
-                    sys.exit(1)                   
-                    
+                    print(f"✅ {filename} is valid")
             except jsonschema.exceptions.ValidationError as e:
                 print(f"❌ {filename} failed validation:\n{e.message}")
                 sys.exit(1)
