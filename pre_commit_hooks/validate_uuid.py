@@ -48,7 +48,7 @@ def check_code_format(code,contenttype):
         return True
     elif contenttype == 'action_type' and re.match(r'^ACTP_\d+$', code):
         return True
-    elif contenttype == 'attribute' and re.match(r'^ATTR_\w+_\d+$', code):
+    elif contenttype == 'attributes' and re.match(r'^ATTR_\w+_\d+$', code):
         return True
     else:
         return False
