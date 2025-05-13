@@ -635,7 +635,7 @@ execution_module_schema = {
                 "type": "string"
               },
               "value": {
-                "type": ["string", "int", "boolean", "datetime", "number"]
+                "type": ["string", "integer", "boolean", "string", "number"]
               }
             },
             "required": ["attribute_type", "attribute_id", "condition", "value"]
