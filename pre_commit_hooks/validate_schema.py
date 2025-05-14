@@ -277,7 +277,7 @@ jit_schema = {
     "updatedon"
   ]
 }
-Attributes_Schema ={
+Attributes_Schema = {
   "type": "object",
   "required": ["id", "version", "category", "code", "tags", "type", "attributes"],
   "properties": {
@@ -360,7 +360,7 @@ Attributes_Schema ={
     }
   }
 }
-#Behavior_Finding_Schema = {
+Behavior_Finding_Schema = {
   "type": "object",
   "properties": {
     "id": {
@@ -565,7 +565,6 @@ Attributes_Schema ={
     "posture", "browser_enabled", "description", "query", "config", "lambda"
   ]
 }
-Behavior_Finding_Schema = {
   "type": "object",
   "properties": {
     "id": {
