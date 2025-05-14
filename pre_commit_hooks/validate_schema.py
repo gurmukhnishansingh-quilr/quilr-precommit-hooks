@@ -514,7 +514,7 @@ Behavior_Finding_Schema = {
         }
       },
       "required": [
-        "datasourcetype", "expression", "type", "subtype", "status",
+        "expression", "type", "subtype", "status",
         "code", "sla", "entity", "entitytype", "tags",
         "sourceofalert", "template", "artifacts", "properties"
       ]
